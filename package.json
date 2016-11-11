@@ -1,0 +1,22 @@
+{
+  "name": "fpl",
+  "version": "1.0.0",
+  "description": "Extrat data from FPL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adhorrig/fpl.git"
+  },
+  "author": "Adam Horrigan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adhorrig/fpl/issues"
+  },
+  "homepage": "https://github.com/adhorrig/fpl#readme",
+  "dependencies": {
+    "mysql": "^2.12.0"
+  }
+}
