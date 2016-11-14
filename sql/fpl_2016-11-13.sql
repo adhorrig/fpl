@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.15)
 # Database: fpl
-# Generation Time: 2016-11-13 12:27:09 +0000
+# Generation Time: 2016-11-14 19:59:12 +0000
 # ************************************************************
 
 
@@ -85,6 +85,29 @@ CREATE TABLE `profiles` (
   `value` int(11) DEFAULT NULL,
   `favourite_team` int(11) DEFAULT NULL,
   PRIMARY KEY (`profile_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table teams
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `teams`;
+
+CREATE TABLE `teams` (
+  `team_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `code` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `short_name` varchar(255) DEFAULT NULL,
+  `strength` int(11) DEFAULT NULL,
+  `strength_overall_home` int(11) DEFAULT NULL,
+  `strength_overall_away` int(11) DEFAULT NULL,
+  `strength_attack_home` int(11) DEFAULT NULL,
+  `strength_attack_away` int(11) DEFAULT NULL,
+  `strength_defence_home` int(11) DEFAULT NULL,
+  `strength_defence_away` int(11) DEFAULT NULL,
+  `team_division` int(11) DEFAULT NULL,
+  PRIMARY KEY (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
