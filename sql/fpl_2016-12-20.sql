@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.15)
 # Database: fpl
-# Generation Time: 2016-11-15 22:02:36 +0000
+# Generation Time: 2016-12-20 17:19:26 +0000
 # ************************************************************
 
 
@@ -36,6 +36,9 @@ CREATE TABLE `gameweeks` (
   `is_previous` varchar(255) DEFAULT NULL,
   `is_current` varchar(255) DEFAULT NULL,
   `is_next` varchar(255) DEFAULT NULL,
+  `deadline_time_epoch` int(11) DEFAULT NULL,
+  `deadline_time_game_offset` int(11) DEFAULT NULL,
+  `deadline_time_formatted` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,7 +50,8 @@ CREATE TABLE `gameweeks` (
 DROP TABLE IF EXISTS `live`;
 
 CREATE TABLE `live` (
-  `player_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) DEFAULT NULL,
   `gameweek_id` int(11) DEFAULT NULL,
   `assists` int(11) DEFAULT NULL,
   `bonus` int(11) DEFAULT NULL,
@@ -64,24 +68,7 @@ CREATE TABLE `live` (
   `saves` int(11) DEFAULT NULL,
   `total_points` int(11) DEFAULT NULL,
   `yellow_cards` int(11) DEFAULT NULL,
-  PRIMARY KEY (`player_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table picks
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `picks`;
-
-CREATE TABLE `picks` (
-  `player_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `gameweek_id` int(11) DEFAULT NULL,
-  `is_captain` varchar(255) DEFAULT NULL,
-  `is_vice_captain` varchar(255) DEFAULT NULL,
-  `multiplier` int(11) DEFAULT NULL,
-  `position` int(11) DEFAULT NULL,
-  PRIMARY KEY (`player_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
