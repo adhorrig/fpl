@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
   database : 'fpl'
 });
 
-for(var i = 0; i < 12; i++){
+for(var i = 0; i < 15; i++){
   fpl.gameweeks(i,function(data){
     data = JSON.parse(data);
     console.log(data);
@@ -22,7 +22,10 @@ for(var i = 0; i < 12; i++){
       highest_score: data.event.highest_score,
       is_previous: data.event.is_previous,
       is_current: data.event.is_current,
-      is_next: data.event.is_next
+      is_next: data.event.is_next,
+      deadline_time_epoch: data.event.deadline_time_epoch,
+      deadline_time_game_offset: data.event.deadline_time_game_offset,
+      deadline_time_formatted: data.event.deadline_time_formatted
     }
 
     var query = connection.query('INSERT INTO gameweeks SET ?', post, function(err, result) {
@@ -31,4 +34,3 @@ for(var i = 0; i < 12; i++){
     console.log(query.sql);
   });
 }
-// connection.end();

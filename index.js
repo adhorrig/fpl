@@ -18,10 +18,15 @@ module.exports = {
     });
   },
   profiles: function(profile,fn){
-    console.log(profile);
     var request = require('request');
-
     request({method: "get", url: profile}, function(err, resp, body){
+      if(body.error) return console.error(body.error);
+      fn(body);
+    })
+  },
+  live: function(live, fn){
+    var request = require('request');
+    request({method: "get", url: live}, function(err, resp, body){
       if(body.error) return console.error(body.error);
       fn(body);
     })

@@ -9,10 +9,12 @@ var connection = mysql.createConnection({
 });
 
 var profiles = [];
-for(var i = 1; i < 10000; i++){ //need to eventually do 400000 profiles
+for(var i = 1; i < 4000000; i++){
   var profile = "https://fantasy.premierleague.com/drf/entry/"+i;
   profiles.push(profile)
 }
+
+profiles = profiles.reverse();
 
 setInterval(function() {
   var currentProfile = profiles.pop();
@@ -33,13 +35,10 @@ setInterval(function() {
       favourite_team: data.entry.favourite_team
     }
 
+    var date = new Date();
     var query = connection.query('INSERT INTO profiles SET ?', profile, function(err, result) {
       if(err) throw(err);
     });
-    console.log("profile inserted:" +query.sql);
+    console.log(date+": profile inserted:" +query.sql);
   });
-}, 1000);
-
-
-
-// connection.end();
+}, 250);

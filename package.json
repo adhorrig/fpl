@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/adhorrig/fpl#readme",
   "dependencies": {
-    "mysql": "^2.12.0"
+    "mysql": "^2.12.0",
+    "request": "^2.79.0"
   }
 }
