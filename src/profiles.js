@@ -1,15 +1,16 @@
 var fpl = require('./index.js');
 var mysql = require('mysql');
+var config = require('../config.js');
 
 var connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'root',
-  password : '',
-  database : 'fpl'
+  host     : config.database.host,
+  user     : config.database.user,
+  password : config.database.password,
+  database : config.database.database
 });
 
 var profiles = [];
-for(var i = 1; i < 4000000; i++){
+for(var i = 1; i < config.options.profiles; i++){
   var profile = "https://fantasy.premierleague.com/drf/entry/"+i;
   profiles.push(profile)
 }

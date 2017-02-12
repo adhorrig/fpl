@@ -1,25 +1,21 @@
 var fpl = require('./index.js');
 var mysql = require('mysql');
+var config = require('../config.js');
 
 var connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'root',
-  password : '',
-  database : 'fpl'
+  host     : config.database.host,
+  user     : config.database.user,
+  password : config.database.password,
+  database : config.database.database
 });
 
 var gameweeks = [];
-for(var i = 1; i < 15; i++){
+for(var i = 1; i <= config.options.liveweeks; i++){
   var gameweek = "https://fantasy.premierleague.com/drf/event/"+i+"/live";
   gameweeks.push(gameweek)
 }
 
-for (var i=0; i < gameweeks.length; i++){
-  console.log(gameweeks[i]);
-}
-
 gameweeks = gameweeks.reverse();
-
 setInterval(function() {
   var currentGameweek = gameweeks.pop();
   fpl.live(currentGameweek,function(data){
@@ -27,7 +23,6 @@ setInterval(function() {
 
     for(key in data.elements){
       if(!data.elements.hasOwnProperty(key)) continue;
-
       var live = {
         player_id: key,
         gameweek_id: currentGameweek.match(/\d+/)[0],
@@ -46,21 +41,13 @@ setInterval(function() {
         saves: data.elements[key].stats.saves,
         total_points: data.elements[key].stats.total_points,
         yellow_cards: data.elements[key].stats.yellow_cards,
-
       }
+
       var date = new Date();
       var query = connection.query('INSERT INTO live SET ?', live, function(err, result) {
         if(err) throw(err);
       });
       console.log(date+": profile inserted:" +query.sql);
     }
-
   });
 }, 1500);
-
-
-
-
-
-
-// connection.end();

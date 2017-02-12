@@ -1,18 +1,18 @@
 var fpl = require('./index.js');
 var mysql = require('mysql');
+var config = require('../config.js');
 
 var connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'root',
-  password : '',
-  database : 'fpl'
+  host     : config.database.host,
+  user     : config.database.user,
+  password : config.database.password,
+  database : config.database.database
 });
 
-for(var i = 0; i < 15; i++){
+for(var i = 0; i < config.options.gameweeks; i++){
   fpl.gameweeks(i,function(data){
     data = JSON.parse(data);
-    console.log(data);
-
+    
     var post= {
       gameweek_id: data.event.id,
       name: data.event.name,

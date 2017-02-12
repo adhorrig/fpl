@@ -1,18 +1,18 @@
 var fpl = require('./index.js');
 var mysql = require('mysql');
+var config = require('../config.js');
 
 var connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'root',
-  password : '',
-  database : 'fpl'
+  host     : config.database.host,
+  user     : config.database.user,
+  password : config.database.password,
+  database : config.database.database
 });
 
 fpl.players(function(data){
   data = JSON.parse(data);
 
   for(var i = 0; i < data.elements.length; i++){
-    console.log(data.elements[i].id)
     var player = {
       player_id: data.elements[i].id,
       web_name: data.elements[i].web_name,
