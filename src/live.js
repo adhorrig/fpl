@@ -1,29 +1,29 @@
-var fpl = require('./index.js');
-var mysql = require('mysql');
-var config = require('../config.js');
+const fpl = require('./index.js');
+const mysql = require('mysql');
+const config = require('../config.js');
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host     : config.database.host,
   user     : config.database.user,
   password : config.database.password,
   database : config.database.database
 });
 
-var gameweeks = [];
+let gameweeks = [];
 for(var i = 1; i <= config.options.liveweeks; i++){
-  var gameweek = "https://fantasy.premierleague.com/drf/event/"+i+"/live";
+  let gameweek = "https://fantasy.premierleague.com/drf/event/"+i+"/live";
   gameweeks.push(gameweek)
 }
 
 gameweeks = gameweeks.reverse();
-setInterval(function() {
-  var currentGameweek = gameweeks.pop();
-  fpl.live(currentGameweek,function(data){
+setInterval( () => {
+  let currentGameweek = gameweeks.pop();
+  fpl.live(currentGameweek, (data) => {
     data = JSON.parse(data);
 
     for(key in data.elements){
       if(!data.elements.hasOwnProperty(key)) continue;
-      var live = {
+      let live = {
         player_id: key,
         gameweek_id: currentGameweek.match(/\d+/)[0],
         assists: data.elements[key].stats.assists,
@@ -43,8 +43,8 @@ setInterval(function() {
         yellow_cards: data.elements[key].stats.yellow_cards,
       }
 
-      var date = new Date();
-      var query = connection.query('INSERT INTO live SET ?', live, function(err, result) {
+      let date = new Date();
+      let query = connection.query('INSERT INTO live SET ?', live, (err, result) => {
         if(err) throw(err);
       });
       console.log(date+": profile inserted:" +query.sql);

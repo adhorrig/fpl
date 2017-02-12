@@ -1,19 +1,19 @@
-var fpl = require('./index.js');
-var mysql = require('mysql');
-var config = require('../config.js');
+const fpl = require('./index.js');
+const mysql = require('mysql');
+const config = require('../config.js');
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host     : config.database.host,
   user     : config.database.user,
   password : config.database.password,
   database : config.database.database
 });
 
-fpl.players(function(data){
+fpl.players((data) => {
   data = JSON.parse(data);
 
   for(var i = 0; i < data.elements.length; i++){
-    var player = {
+    let player = {
       player_id: data.elements[i].id,
       web_name: data.elements[i].web_name,
       team_code: data.elements[i].team_code,
@@ -30,7 +30,7 @@ fpl.players(function(data){
       points_per_game: data.elements[i].points_per_game,
     }
 
-    var query = connection.query('INSERT INTO players SET ?', player, function(err, result) {
+    let query = connection.query('INSERT INTO players SET ?', player, (err, result) => {
       if(err) throw(err);
     });
     console.log(query.sql);

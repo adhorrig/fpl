@@ -1,8 +1,8 @@
-var fpl = require('./index.js');
-var mysql = require('mysql');
-var config = require('../config.js');
+const fpl = require('./index.js');
+const mysql = require('mysql');
+const config = require('../config.js');
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host     : config.database.host,
   user     : config.database.user,
   password : config.database.password,
@@ -10,10 +10,10 @@ var connection = mysql.createConnection({
 });
 
 for(var i = 0; i < config.options.gameweeks; i++){
-  fpl.gameweeks(i,function(data){
+  fpl.gameweeks(i, (data) => {
     data = JSON.parse(data);
-    
-    var post= {
+
+    let post= {
       gameweek_id: data.event.id,
       name: data.event.name,
       event: data.entry_history.event,
@@ -28,7 +28,7 @@ for(var i = 0; i < config.options.gameweeks; i++){
       deadline_time_formatted: data.event.deadline_time_formatted
     }
 
-    var query = connection.query('INSERT INTO gameweeks SET ?', post, function(err, result) {
+    let query = connection.query('INSERT INTO gameweeks SET ?', post, (err, result) => {
       if(err) throw(err);
     });
     console.log(query.sql);
