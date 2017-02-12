@@ -20,7 +20,7 @@ module.exports = {
       fn(body);
     })
   },
-  live: (line, fn) => {
+  live: (live, fn) => {
     request({method: "get", url: live}, (err, resp, body) => {
       if(body.error) return console.error(body.error);
       fn(body);
